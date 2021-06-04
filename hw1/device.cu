@@ -4,7 +4,18 @@
 __global__ void cuda_kernel(int *B,int *A,IndexSave *dInd)
 {	
 	// to test the result
-	dInd[10].head = 10000;	
+	// int i = 0;
+	// int totalThread = blockDim.x * gridDim.x;
+	// int stripe = SIZE / totalThread;
+	// int head = (blockIdx.x * blockDim.x + threadIdx.x)*stripe;
+	// int loopLim = head * stripe;
+	// for(i = head; i < loopLim; i++) {
+	// 	dInd[i].blockInd_x = blockIdx.x;
+	// 	dInd[i].threadInd_x = threadIdx.x;
+	// 	dInd[i].head = head;
+	// 	dInd[i].stripe = stripe;
+	// 	B[i] = B[i] * A[i];
+	// }
 };
 
 
@@ -27,7 +38,7 @@ float GPU_kernel(int *B,int *A,IndexSave* indsave){
 
 	// Copy Data to be Calculated
 	cudaMemcpy(dA, A, sizeof(int)*SIZE, cudaMemcpyHostToDevice);
-	cudaMemcpy(dB, B, sizeof(int)*SIZE, cudaMemcpyHostToDevice);
+	cudaMemcpy(dB, A, sizeof(int)*SIZE, cudaMemcpyHostToDevice);
 
 	// Copy Data (indsave array) to device
 	cudaMemcpy(dInd, indsave, sizeof(IndexSave)*SIZE, cudaMemcpyHostToDevice);
@@ -46,8 +57,7 @@ float GPU_kernel(int *B,int *A,IndexSave* indsave){
 
 	// Copy Output back
 	cudaMemcpy(indsave, dInd, sizeof(IndexSave)*SIZE, cudaMemcpyDeviceToHost);
-	cudaMemcpy(dA, A, sizeof(int)*SIZE, cudaMemcpyDeviceToHost);
-	cudaMemcpy(dB, B, sizeof(int)*SIZE, cudaMemcpyDeviceToHost);
+	cudaMemcpy(B, dB, sizeof(int)*SIZE, cudaMemcpyDeviceToHost);
 
 	// Release Memory Space on Device
 	cudaFree(dA);
