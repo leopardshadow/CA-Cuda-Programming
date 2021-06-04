@@ -3,7 +3,8 @@
 
 __global__ void cuda_kernel(int *B,int *A,IndexSave *dInd)
 {	
-	// complete cuda kernel function	
+	// to test the result
+	dInd[10].head = 10000;	
 };
 
 
@@ -18,11 +19,15 @@ float GPU_kernel(int *B,int *A,IndexSave* indsave){
 	cudaEventCreate (&stop); 	
 
 	// Allocate Memory Space on Device
+	cudaMalloc((void**)&dA,sizeof(int)*SIZE);
+	cudaMalloc((void**)&dB,sizeof(int)*SIZE);
 
 	// Allocate Memory Space on Device (for observation)
 	cudaMalloc((void**)&dInd,sizeof(IndexSave)*SIZE);
 
 	// Copy Data to be Calculated
+	cudaMemcpy(dA, A, sizeof(int)*SIZE, cudaMemcpyHostToDevice);
+	cudaMemcpy(dB, B, sizeof(int)*SIZE, cudaMemcpyHostToDevice);
 
 	// Copy Data (indsave array) to device
 	cudaMemcpy(dInd, indsave, sizeof(IndexSave)*SIZE, cudaMemcpyHostToDevice);
@@ -40,6 +45,9 @@ float GPU_kernel(int *B,int *A,IndexSave* indsave){
   	cudaEventSynchronize(stop); 
 
 	// Copy Output back
+	cudaMemcpy(indsave, dInd, sizeof(IndexSave)*SIZE, cudaMemcpyDeviceToHost);
+	cudaMemcpy(dA, A, sizeof(int)*SIZE, cudaMemcpyDeviceToHost);
+	cudaMemcpy(dB, B, sizeof(int)*SIZE, cudaMemcpyDeviceToHost);
 
 	// Release Memory Space on Device
 	cudaFree(dA);
