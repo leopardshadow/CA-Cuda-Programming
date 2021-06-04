@@ -3,19 +3,20 @@
 
 __global__ void cuda_kernel(int *B,int *A,IndexSave *dInd)
 {	
-	// to test the result
-	// int i = 0;
-	// int totalThread = blockDim.x * gridDim.x;
-	// int stripe = SIZE / totalThread;
-	// int head = (blockIdx.x * blockDim.x + threadIdx.x)*stripe;
-	// int loopLim = head * stripe;
-	// for(i = head; i < loopLim; i++) {
-	// 	dInd[i].blockInd_x = blockIdx.x;
-	// 	dInd[i].threadInd_x = threadIdx.x;
-	// 	dInd[i].head = head;
-	// 	dInd[i].stripe = stripe;
-	// 	B[i] = B[i] * A[i];
-	// }
+	int i = 0;
+	int totalThread = blockDim.x * gridDim.x;
+	int stripe = SIZE / totalThread;
+	int head = (blockIdx.x * blockDim.x + threadIdx.x) * stripe;
+	int loopLim = head + stripe;
+	for(i = head; i < loopLim; i++) {
+		dInd[i].blockInd_x = blockIdx.x;
+		dInd[i].threadInd_x = threadIdx.x;
+		dInd[i].head = head;
+		dInd[i].stripe = stripe;
+		for(int j=1;j<LOOP;j++) {
+			B[i]*=A[i];
+		}
+	}
 };
 
 
