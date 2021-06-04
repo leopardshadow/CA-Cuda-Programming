@@ -4,6 +4,19 @@
 __global__ void cuda_kernel(int *B,int *A,IndexSave *dInd)
 {	
 	//
+	int i = 0;
+	int totalThread = blockDim.x * gridDim.x;
+	int stripe = totalThread;
+	int head = blockDim.x * blockIdx.x + threadIdx.x;
+	for(i = head; i < SIZE; i+=stripe) {
+		dInd[i].blockInd_x = blockIdx.x;
+		dInd[i].threadInd_x = threadIdx.x;
+		dInd[i].head = head;
+		dInd[i].stripe = stripe;
+		for(int j=1;j<LOOP;j++) {
+			B[i]*=A[i];
+		}
+	}
 };
 
 
