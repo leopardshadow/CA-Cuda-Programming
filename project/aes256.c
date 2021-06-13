@@ -74,7 +74,41 @@ static const uint8_t sboxinv[256] =
     0xe1, 0x69, 0x14, 0x63, 0x55, 0x21, 0x0c, 0x7d
 };
 
-// key expansion
+
+uint8_t rcon[11] = 
+{
+   //  0     1     2     3     4     5     6     7     8     9    10
+    0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36
+};
+
+
+uint8_t **keySchedule(uint8_t *key) {
+
+    uint8_t **roundKeys = malloc(11 * sizeof(uint8_t*));
+    for(uint8_t i = 0; i < 11 ; i++) {
+        roundKeys[i] = malloc(16 * sizeof(uint8_t));
+    }
+
+    for(uint8_t i = 0; i < 16; i++) {
+        roundKeys[0][i] = key[i];
+    }
+
+    for(uint8_t i = 1; i < 11; i++) {
+
+        for(uint8_t j = 0; j < 4; j++) {
+            roundKeys[i][j] = roundKeys[i-1][j+12];
+            roundKeys[i][j] = sbox[ roundKeys[i][j] ];
+            roundKeys[i][j] ^= roundKeys[i-1][j];
+        }
+        for(uint8_t j = )
+    }
+    
+
+    return roundKeys;
+}
+
+
+
 
 void addRoundKey(uint8_t *state, uint8_t *roundKey) {
     for(uint8_t i = 0; i < 16; i++) {
@@ -88,6 +122,9 @@ void subBytes(uint8_t *state) {
     }
 }
 
+// copy from others for now
+// https://gist.github.com/Yunyung/2e38fd71c3fb5967c802049514909569
+
 void shiftRows(uint8_t *state) {
     uint8_t i;
     i = state[1]; state[1] = state[5]; state[5] = state[9]; state[9] = state[13]; state[13] = i;
@@ -96,19 +133,47 @@ void shiftRows(uint8_t *state) {
     i = state[3]; state[3] = state[15]; state[15] = state[11]; state[11] = state[7]; state[7] = i;
 }
 
+#define xtime(x)   ((x << 1) ^ (((x >> 7) & 0x01) * 0x1b))
 
-// mixColumns
+void mixColumns(uint8_t *state) {
+    unsigned char Tmp,Tm,t;
+    for(int i = 0; i < 16; i+=4)
+    {    
+        t   = state[i+0];
+        Tmp = state[i+0] ^ state[i+1] ^ state[i+2] ^ state[i+3];
+        Tm  = state[i+0] ^ state[i+1]; Tm = xtime(Tm); state[i+0] ^= Tm ^ Tmp ;
+        Tm  = state[i+1] ^ state[i+2]; Tm = xtime(Tm); state[i+1] ^= Tm ^ Tmp ;
+        Tm  = state[i+2] ^ state[i+3]; Tm = xtime(Tm); state[i+2] ^= Tm ^ Tmp ;
+        Tm  = state[i+3] ^ t;          Tm = xtime(Tm); state[i+3] ^= Tm ^ Tmp ;
+    }
+
+}
 
 
-void aes_encrpyt() {
+void aes_encrpyt(uint8_t *state, uint8_t *key) {
+
+    uint8_t **roundKeys = keySchedule(key);
+
+    addRoundKey(state, roundKeys[0]);
+
+    for(uint8_t i = 1; i <= 9; i++) {
+        subBytes(state);
+        shiftRows(state);
+        mixColumns(state);
+        addRoundKey(state, roundKeys[i]);
+    }
+
+    subBytes(state);
+    shiftRows(state);
+    addRoundKey(state, roundKeys[10]);
 
 }
 
 
 int main(int argc, char const *argv[])
 {
-    
-    uint8_t state[16];
+    uint8_t state[16], key[16];
+
 
     return 0;
 }
