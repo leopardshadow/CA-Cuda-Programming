@@ -49,13 +49,13 @@ int simulate(int r) {
 int runSimulations() {
     
     int r = 0;
+
     // do simulation m times
     for(int m = 0; m < M; m++) {
 
         r = simulate(r);
-        printf("sim\n");
     }
-    return (r + 1) % 2;
+    return r;
 }
 
 int main(int argc, char const *argv[])
@@ -82,21 +82,10 @@ int main(int argc, char const *argv[])
 
     for(i = 0; i <= N+1; i++) {
         for(j = 0; j <= N+1; j++) {
-            printf("%c", event[0][T(i, j)] + '0');
+            printf("%c", event[r][T(i, j)] + '0');
         }
         printf("\n");
     }
-
-    printf("\n-----\n");
-
-    for(i = 0; i <= N+1; i++) {
-        for(j = 0; j <= N+1; j++) {
-            printf("%c", event[1][T(i, j)] + '0');
-        }
-        printf("\n");
-    }
-
-
 
 
     return 0;
