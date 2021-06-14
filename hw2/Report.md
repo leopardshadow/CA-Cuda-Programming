@@ -6,7 +6,31 @@
 
 ## 環境
 
+### 硬體
 
+* CPU:
+* GPU: 
+
+### 編譯
+
+根據下面三種情況其中一種選擇輸入的指令。
+
+```bash
+# compute by CPU
+$ nvcc main.cu
+
+# compute by GPU using way 1
+$ nvcc main.cu device1.cu
+
+# compute by GPU using way 2
+$ nvcc main.cu device2.cu
+```
+
+不論哪一種都會產生 `a.out` 檔案，透過下面指令執行並印出結果。
+
+```bash
+$ ./a.out
+```
 
 ## 檔案說明
 
