@@ -1,3 +1,10 @@
+#include "parameters.h"
+
+#ifndef T
+#define T(x, y) ((x) + (N+2)*(y))
+#endif
+
+
 void simulate(u_int8_t *now, u_int8_t *next) {
     int i, j, t;
     int adjac;
@@ -25,12 +32,12 @@ void simulate(u_int8_t *now, u_int8_t *next) {
 }
 
 
-void runSimulations() {
+u_int8_t *runSimulations(u_int8_t event[2][(N+2)*(N+2)]) {
     
     // do simulation m times
     for(int m = 0; m < M; m++) {
 
         simulate(event[m%2], event[(m+1)%2]);
     }
-    result = event[M%2];
+    return event[M%2];
 }

@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// #include "host.h"
+#include "host.h"
 
 #include "parameters.h"
 
@@ -48,9 +48,9 @@ int main(int argc, char const *argv[])
     // printf("\n-----\n");
 
     
-    // runSimulations();
+    result = runSimulations(event);
 
-    result = runGPUSimulations(event);
+    // result = runGPUSimulations(event);
 
     for(i = 0; i <= N+1; i++) {
         for(j = 0; j <= N+1; j++) {
