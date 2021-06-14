@@ -8,13 +8,14 @@
 
 extern float GPU_kernel(int *B, int *A);
 
-u_int8_t state[N][N] = {
-    {'1','0','0','0','1'},
-    {'0','0','1','0','0'},
-    {'0','1','1','1','0'},
-    {'0','0','1','0','0'},
-    {'0','1','0','1','0'},
-};
+u_int8_t state[N][N]; 
+// = {
+//     {'1','0','0','0','1'},
+//     {'0','0','1','0','0'},
+//     {'0','1','1','1','0'},
+//     {'0','0','1','0','0'},
+//     {'0','1','0','1','0'},
+// };
 
 u_int8_t event[2][ (N+2) * (N+2) ] =  {0};
 
@@ -61,27 +62,33 @@ void runSimulations() {
 
 __global__ void gpu_simulate(u_int8_t *dNow, u_int8_t *dNext)
 {	
-    int i = threadIdx.x + 1;
-    int j = blockIdx.x + 1;
-
-
+    int i, j;
     int t, adjac;
+
+    int stripeI = N / gridNum;
+    int stripeJ = N / blockNum;
+
+    for(i = 1; i <= N; i+=stripeI) {
+        for(j = 1; j <= N; j+=stripeJ) {
+
+            adjac = 
+                dNow[T(i-1, j-1)] + dNow[T(i, j-1)] + dNow[T(i+1, j-1)] + 
+                dNow[T(i-1, j)]   +                 + dNow[T(i+1, j)]   + 
+                dNow[T(i-1, j+1)] + dNow[T(i, j+1)] + dNow[T(i+1, j+1)];
     
-    adjac = 
-        dNow[T(i-1, j-1)] + dNow[T(i, j-1)] + dNow[T(i+1, j-1)] + 
-        dNow[T(i-1, j)]   +                 + dNow[T(i+1, j)]   + 
-        dNow[T(i-1, j+1)] + dNow[T(i, j+1)] + dNow[T(i+1, j+1)];
-
-
-    t = dNow[T(i, j)];
-
-
-    if((!t && adjac == 3) || (t && adjac == 2) || (t && adjac == 3)) {
-        dNext[T(i, j)] = 1;
+    
+            t = dNow[T(i, j)];
+        
+            if((!t && adjac == 3) || (t && adjac == 2) || (t && adjac == 3)) {
+                dNext[T(i, j)] = 1;
+            }
+            else {
+                dNext[T(i, j)] = 0;
+            }
+        
+        }
     }
-    else {
-        dNext[T(i, j)] = 0;
-    }
+    
 }
 
 
@@ -115,38 +122,35 @@ int main(int argc, char const *argv[])
 {
     int i, j;
 
+    state[150][49] = 1;
+    state[150][50] = 1;
+    state[150][51] = 1;
+
     for(i = 1; i <= N; i++) {
         for(j = 1; j <= N; j++) {
-            event[0][T(i, j)] = state[i-1][j-1] - '0';
+            event[0][T(i, j)] = state[i-1][j-1];
         }
     }
-
-    for(i = 0; i <= N+1; i++) {
-        for(j = 0; j <= N+1; j++) {
-            printf("%c", event[0][T(i, j)] + '0');
-        }
-        printf("\n");
-    }
-    printf("\n-----\n");
-
-    
-    // runSimulations();
 
     // for(i = 0; i <= N+1; i++) {
     //     for(j = 0; j <= N+1; j++) {
-    //         printf("%c", result[T(i, j)] + '0');
+    //         printf("%c", event[0][T(i, j)] + '0');
     //     }
     //     printf("\n");
     // }
+    // printf("\n-----\n");
 
+    
+    // runSimulations();
 
     runGPUSimulations();
 
     for(i = 0; i <= N+1; i++) {
         for(j = 0; j <= N+1; j++) {
-            printf("%c", result[T(i, j)] + '0');
+            if(result[T(i, j)] == 1) {
+                printf("alive: x = %d, y = %d\n", i, j);
+            }
         }
-        printf("\n");
     }
 
 
