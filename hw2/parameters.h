@@ -7,4 +7,6 @@ const int M = 11; // M rounds
 const int gridNum = 10;
 const int blockNum = 10;
 
+#define T(x, y) ((x) + (N+2)*(y))
+
 #endif

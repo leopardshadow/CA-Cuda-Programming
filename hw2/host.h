@@ -1,10 +1,5 @@
 #include "parameters.h"
 
-#ifndef T
-#define T(x, y) ((x) + (N+2)*(y))
-#endif
-
-
 void simulate(u_int8_t *now, u_int8_t *next) {
     int i, j, t;
     int adjac;

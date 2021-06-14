@@ -1,9 +1,5 @@
 #include "parameters.h"
 
-#ifndef T
-#define T(x, y) ((x) + (N+2)*(y))
-#endif
-
 __global__ void gpu_simulate(u_int8_t *dNow, u_int8_t *dNext)
 {	
     int i, j;

@@ -6,10 +6,6 @@
 
 #include "parameters.h"
 
-#ifndef T
-#define T(x, y) ((x) + (N+2)*(y))
-#endif
-
 extern u_int8_t *runGPUSimulations(u_int8_t event[2][(N+2)*(N+2)]);
 
 u_int8_t state[N][N]; 
