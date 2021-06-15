@@ -46,9 +46,9 @@ int main(int argc, char const *argv[])
     // printf("\n-----\n");
 
     
-    result = runSimulations(event);
+    // result = runSimulations(event);
 
-    // result = runGPUSimulations(event);
+    result = runGPUSimulations(event);
 
     // for(i = 0; i <= N+1; i++) {
     //     for(j = 0; j <= N+1; j++) {
