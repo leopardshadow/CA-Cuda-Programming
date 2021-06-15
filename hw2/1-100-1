@@ -3,3 +3,12 @@
  ccl@ccl-ed  ~/Desktop/CudA/CA-Cuda-Programming/hw2   main ±  nvcc main.cu 
  ccl@ccl-ed  ~/Desktop/CudA/CA-Cuda-Programming/hw2   main ±  time ./a.out 
 ./a.out  1.08s user 0.00s system 99% cpu 1.083 total
+
+
+10000
+./a.out  96.53s user 0.01s system 99% cpu 1:36.55 total
+./a.out  99.84s user 0.01s system 100% cpu 1:39.84 total
+
+
+100000
+

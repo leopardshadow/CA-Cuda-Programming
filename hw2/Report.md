@@ -33,6 +33,7 @@
 
 ```bash
 # compute by CPU
+# comment runGPUSimulations and uncomment runSimulations in main()
 $ nvcc main.cu
 
 # compute by GPU with different ways of splitting data
@@ -83,15 +84,20 @@ $ ./a.out
 
 下表的時間是用 Linux 指令 `time` 所顯示之 total 時間 (`time ./a.out`)，單位都是「秒」。方格大小設為 1000x1000，每個 grid 所含 block 數量和每個 block 所含 thread 數量都是 10。表中 N/A 表示計算時間過久 (超過 5 分鐘)，
 
-|        |  CPU  | device1 | device2 | device3 | device4 |
-| :----: | :---: | :-----: | :-----: | :-----: | :-----: |
-|   1    | 0.032 |  0.186  |  0.266  |  0.238  |  0.148  |
-|  100   | 1.083 |  0.647  |  0.150  |  0.502  |  0.542  |
-| 10000  |  N/A  | 37.733  |  0.568  | 29.126  | 32.878  |
-| 100000 |  N/A  | 377.65  |  2.500  | 287.55  | 330.62  |
+| M rounds |  CPU   | device1 | device2 | device3 | device4 |
+| :------: | :----: | :-----: | :-----: | :-----: | :-----: |
+|    1     | 0.032  |  0.186  |  0.266  |  0.238  |  0.148  |
+|   100    | 1.083  |  0.647  |  0.150  |  0.502  |  0.542  |
+|  10000   | 99.840 | 37.733  |  0.568  | 29.126  | 32.878  |
+|  100000  |  N/A   | 377.650 |  2.500  | 287.550 | 330.620 |
+| 1000000  |  N/A   |   N/A   | 22.501  |   N/A   |   N/A   |
 
-從上表我歸納出幾個結論:
+<img src="statistic.png" alt="statistic" style="zoom:75%;" />
+
+從上表和圖我歸納出幾個結論:
 
 * 當計算量不大時 (M 很小時)，CPU 計算所花的總時間比使用 GPU 還短，這可能是因為 CPU 單一運算能力原本就比 GPU 強，而且從 host 複製記憶體到 device 再搬移回來也需要時間。
 * 但當 M 逐漸變大時，GPU 的優勢便展現了，在這種計算密集的應用裡，使用 GPU 能大幅縮短運算時間。
 * 不同的資料切割方式對時間有很大的影響，表中的 device2 的計算時間比其他方式還短很多。
+* 4 種不同切割方式，若以執行時間為唯一標準，其優劣為 device 2 > device 3 > device 4 > device1。
+
