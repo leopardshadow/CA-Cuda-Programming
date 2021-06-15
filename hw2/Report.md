@@ -15,17 +15,17 @@
 
 ### 編譯
 
-根據下面三種情況其中一種選擇輸入的指令。
+根據下面幾種情況其中一種選擇輸入的指令。
 
 ```bash
 # compute by CPU
 $ nvcc main.cu
 
-# compute by GPU using way 1
+# compute by GPU different 
 $ nvcc main.cu device1.cu
-
-# compute by GPU using way 2
 $ nvcc main.cu device2.cu
+$ nvcc main.cu device3.cu
+$ nvcc main.cu device4.cu
 ```
 
 不論哪一種都會產生 `a.out` 檔案，透過下面指令執行並印出結果。
@@ -62,9 +62,7 @@ $ ./a.out
 
 雖然這裡用二維矩陣繪圖，但實做是使用一維陣列，原本二維矩陣對應的 i, j 經變換後對應到一維陣列。如果將其繪出會是以下樣子。這裡只畫前 16 個。另外，在實做時，我在二維矩形外有加一圈邊邊，其細胞狀態一直都維持死亡，不用更新他的狀態，這樣原本邊邊角角的細胞才不用做特殊處理，這裡沒畫出這個部份。
 
-
-
-
+<img src="Screenshot 2021-06-15 124625.png" alt="Screenshot 2021-06-15 12:46:25" style="zoom:67%;" />
 
 ## 模擬結果
 
