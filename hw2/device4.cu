@@ -6,15 +6,19 @@ __global__ void gpu_simulate(u_int8_t *dNow, u_int8_t *dNext)
     int i, j;
     int t, adjac;
 
-    // printf("Stripe: i = %d, j = %d\n", stripeI, stripeJ);
 
-    int head = blockDim.x * blockIdx.x + threadIdx.x;
     int loopLim = N / (blockDim.x * gridDim.x);
+    int head = (blockDim.x * blockIdx.x + threadIdx.x) * loopLim + 1;
 
-    for(i = head; i <= head + loopLim; i++) {
+
+    // printf("blockDim = %d, blockId = %d, threadId = %d\n", blockDim.x, blockIdx.x, threadIdx.x);
+    // printf("head = %d, lim = %d\n", head, loopLim);
+
+
+    for(i = head; i < head + loopLim; i++) {
         for(j = 1; j <= N; j++) {
 
-            // printf("i = %d, j = %d\n", i, j);
+            printf("%03d%03d\n", i, j);
 
             adjac = 
                 dNow[T(i-1, j-1)] + dNow[T(i, j-1)] + dNow[T(i+1, j-1)] + 
