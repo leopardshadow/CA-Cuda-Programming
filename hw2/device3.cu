@@ -14,7 +14,7 @@ __global__ void gpu_simulate(u_int8_t *dNow, u_int8_t *dNext)
     for(i = 1; i <= N; i++) {
         for(j = head; j < head + loopLim; j++) {
 
-            printf("%03d%03d\n", i, j);
+            // printf("%03d%03d\n", i, j);
 
             adjac = 
                 dNow[T(i-1, j-1)] + dNow[T(i, j-1)] + dNow[T(i+1, j-1)] + 
