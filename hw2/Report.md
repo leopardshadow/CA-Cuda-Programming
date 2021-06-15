@@ -6,10 +6,12 @@
 
 ## 環境
 
-### 硬體
+### 使用電腦
 
-* CPU:
-* GPU: 
+* 20.04.1 LTS (Focal Fossa)
+* nvcc release 10.1, V10.1.243
+* CPU: Intel i7-7700 CPU @ 3.60GHz
+* GPU: Nvidia GeForce GTX 1050
 
 ### 編譯
 
