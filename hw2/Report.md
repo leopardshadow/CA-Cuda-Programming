@@ -10,7 +10,7 @@
 
 ## 檔案說明
 
-* readme.txt: 本檔案，使用 Markdown 語法
+* readme.txt: 內容同本檔案，使用 Markdown 語法
 * main.cu: 包含 main function、設定初始值、顯示結果等
 * host.h: 使用 CPU 順序得運算，用於和 GPU 版本程式比較速度
 * device1.cu: 使用 GPU 平行運算的版本，不同切割方式的說明見下面的小節
@@ -43,7 +43,7 @@ $ nvcc main.cu device3.cu
 $ nvcc main.cu device4.cu
 ```
 
-不論哪一種都會產生 `a.out` 檔案，透過下面指令執行並印出結果。
+不論哪一種都會產生 `a.out` 檔案，透過下面指令執行。
 
 ```bash
 $ ./a.out
@@ -82,7 +82,7 @@ $ ./a.out
 
 我嘗試比較以不同切割方式實做和跑 M 個回合時所花的時間。
 
-下表的時間是用 Linux 指令 `time` 所顯示之 total 時間 (`time ./a.out`)，單位都是「秒」。方格大小設為 1000x1000，每個 grid 所含 block 數量和每個 block 所含 thread 數量都是 10。表中 N/A 表示計算時間過久 (超過 5 分鐘)，
+下表的時間是用 Linux 指令 `time` 所顯示之 total 時間 (`time ./a.out`)，單位都是「秒」。方格大小設為 1000x1000，每個 grid 所含 block 數量和每個 block 所含 thread 數量都是 10。表中 N/A 表示計算時間過久 (超過 10 分鐘)，
 
 | M rounds |  CPU   | device1 | device2 | device3 | device4 |
 | :------: | :----: | :-----: | :-----: | :-----: | :-----: |
@@ -94,7 +94,7 @@ $ ./a.out
 
 <img src="statistic.png" alt="statistic" style="zoom:75%;" />
 
-從上表和圖我歸納出幾個結論:
+從上表和圖我歸納出幾點:
 
 * 當計算量不大時 (M 很小時)，CPU 計算所花的總時間比使用 GPU 還短，這可能是因為 CPU 單一運算能力原本就比 GPU 強，而且從 host 複製記憶體到 device 再搬移回來也需要時間。
 * 但當 M 逐漸變大時，GPU 的優勢便展現了，在這種計算密集的應用裡，使用 GPU 能大幅縮短運算時間。
