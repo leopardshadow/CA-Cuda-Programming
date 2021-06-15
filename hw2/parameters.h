@@ -1,8 +1,8 @@
 #ifndef PARAMETERS_H
 #define PARAMETERS_H
 
-const int N = 1000; // NxN space
-const int M = 11; // M rounds
+const int N = 100; // NxN space
+const int M = 2; // M rounds
 
 const int gridNum = 10;
 const int blockNum = 10;
