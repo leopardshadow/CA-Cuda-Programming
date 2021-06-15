@@ -51,7 +51,7 @@ int main(int argc, char const *argv[])
     for(i = 0; i <= N+1; i++) {
         for(j = 0; j <= N+1; j++) {
             if(result[T(i, j)] == 1) {
-                printf("alive: x = %d, y = %d\n", i, j);
+                printf("alive: x = %d, y = %d\n", i-1, j-1);
             }
         }
     }

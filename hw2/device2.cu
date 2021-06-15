@@ -1,4 +1,5 @@
 #include "parameters.h"
+#include <stdio.h>
 
 __global__ void gpu_simulate(u_int8_t *dNow, u_int8_t *dNext)
 {	
@@ -8,12 +9,12 @@ __global__ void gpu_simulate(u_int8_t *dNow, u_int8_t *dNext)
     int stripeI = N / blockNum;
     int stripeJ = N / gridNum;
 
-    // printf("Stripe: i = %d, j = %d\n", stripeI, stripeJ);
+    printf("Stripe: i = %d, j = %d\n", stripeI, stripeJ);
 
     for(i = threadIdx.x; i <= N; i+=stripeI) {
         for(j = blockIdx.x; j <= N; j+=stripeJ) {
 
-            // printf("i = %d, j = %d\n", i, j);
+            printf("i = %d, j = %d\n", i, j);
 
             adjac = 
                 dNow[T(i-1, j-1)] + dNow[T(i, j-1)] + dNow[T(i+1, j-1)] + 
