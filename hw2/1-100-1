@@ -1,0 +1,5 @@
+ ccl@ccl-ed  ~/Desktop/CudA/CA-Cuda-Programming/hw2   main  nvcc main.cu                                                                                                                                                             ccl@ccl-ed  ~/Desktop/CudA/CA-Cuda-Programming/hw2   main ±  time ./a.out 
+./a.out  0.03s user 0.00s system 99% cpu 0.032 total
+ ccl@ccl-ed  ~/Desktop/CudA/CA-Cuda-Programming/hw2   main ±  nvcc main.cu 
+ ccl@ccl-ed  ~/Desktop/CudA/CA-Cuda-Programming/hw2   main ±  time ./a.out 
+./a.out  1.08s user 0.00s system 99% cpu 1.083 total
