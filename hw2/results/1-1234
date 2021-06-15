@@ -3,7 +3,7 @@
 ./a.out  0.03s user 0.10s system 69% cpu 0.186 total
  ccl@ccl-ed  ~/Desktop/CudA/CA-Cuda-Programming/hw2   main ±  nvcc main.cu device2.cu
  ccl@ccl-ed  ~/Desktop/CudA/CA-Cuda-Programming/hw2   main ±  time ./a.out           
-./a.out  0.02s user 0.13s system 54% cpu 0.266 total
+./a.out  0.13s user 0.05s system 90% cpu 0.196 total
  ccl@ccl-ed  ~/Desktop/CudA/CA-Cuda-Programming/hw2   main ±  nvcc main.cu device3.cu
  ccl@ccl-ed  ~/Desktop/CudA/CA-Cuda-Programming/hw2   main ±  time ./a.out           
 ./a.out  0.02s user 0.11s system 57% cpu 0.238 total
