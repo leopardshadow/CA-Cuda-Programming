@@ -82,7 +82,7 @@ $ ./a.out
 
 我嘗試比較以不同切割方式實做和跑 M 個回合時所花的時間。
 
-下表的時間是用 Linux 指令 `time` 所顯示之 total 時間 (`time ./a.out`)，單位都是「秒」。方格大小設為 1000x1000，每個 grid 所含 block 數量和每個 block 所含 thread 數量都是 10。表中 N/A 表示計算時間過久 (超過 10 分鐘)，
+下表的時間是用 Linux 指令 `time` 所顯示之 total 時間 (`time ./a.out`)，單位都是「秒」。方格大小設為 1000x1000，每個 grid 所含 block 數量和每個 block 所含 thread 數量都是 10。表中 N/A 表示計算時間過久 (超過 20 分鐘)，
 
 | M rounds |  CPU   | device1 | device2 | device3 | device4 |
 | :------: | :----: | :-----: | :-----: | :-----: | :-----: |
