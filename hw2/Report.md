@@ -1,5 +1,9 @@
 # CA Project
 
+<h3 align=right> 309510133 - Cheng-Cheng Lo </h3>
+
+[TOC]
+
 ## 題目
 
 康威生命遊戲 (Conway's Game of Life)
@@ -38,8 +42,7 @@ $ ./a.out
 
 * main.cu: 包含 main function、設定初始值、顯示結果等
 * host.h: 使用 CPU 順序得運算，用於和 GPU 版本程式比較速度
-* device1.cu: 使用 GPU 平行運算的版本，切割方式見下一小節
-* device2.cu: 使用 GPU 平行運算的版本，切割方式見下一小節
+* device1.cu, device2.cu, device3.cu, device4.cu: 使用 GPU 平行運算的版本，4 種不同切割方式的說明見下面的小節
 
 ## 演算法內容
 
@@ -70,5 +73,11 @@ $ ./a.out
 
 ### 結果比較
 
+以下時間用 Linux 指令 `time` 所顯示之 total 時間 (`time ./a.out`)。方格大小設為 1000x1000，每個 grid 所含 block 數量和每個 block 所含 thread 數量都是 10。表中 N/A 表示計算時間過久 (超過 秒)，
 
+|       | CPU  | device1 | device2 | device3 | device4 |
+| ----- | :--: | :-----: | :-----: | :-----: | :-----: |
+| 1     |      |         |         |         |         |
+| 100   |      |         |         |         |         |
+| 10000 | N/A  | 37.733  |  0.568  | 29.126  | 32.878  |
 
